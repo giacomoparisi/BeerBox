@@ -6,5 +6,5 @@ class PagedList<out T>(
     val isCompleted: Boolean
 )
 
-fun <T> List<T>.toPagedList(page: Int, isCompleted: Boolean) =
+fun <T> List<T>.toPagedList(page: Int = 0, isCompleted: Boolean = false) =
     PagedList(this, page, isCompleted)

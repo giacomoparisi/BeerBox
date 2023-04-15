@@ -1,5 +1,6 @@
 package com.giacomoparisi.home.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,8 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import com.giacomoparisi.core.compose.preview.ScreenPreview
+import com.giacomoparisi.core.compose.theme.BeerBoxTheme
 import com.giacomoparisi.home.data.HomeState
 import com.giacomoparisi.home.data.HomeViewModel
 
@@ -31,7 +34,10 @@ fun HomeScreen(viewModel: HomeViewModel) {
 fun HomeScreen(state: HomeState) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize()
+        modifier =
+        Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
     ) {
         Text(
             text =
@@ -41,7 +47,16 @@ fun HomeScreen(state: HomeState) {
                 withStyle(SpanStyle(fontWeight = FontWeight.Bold)) { append("Box") }
             },
             style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.padding(20.dp)
         )
+    }
+}
+
+@ScreenPreview
+@Composable
+fun HomeScreenPreview() {
+    BeerBoxTheme {
+        HomeScreen(state = HomeState.mock())
     }
 }
