@@ -86,4 +86,15 @@ dependencies {
     implementation(AndroidX.Lifecycle.viewModelCompose)
     implementation(AndroidX.Activity.compose)
 
+    /*
+        Coil
+        Image loading library for Android
+        Benefits:
+            - Fast
+            - Lightweight
+            - Support for Jetpack Compose
+            - Use Kotlin Coroutines
+     */
+    implementation(Coil.compose)
+
 }

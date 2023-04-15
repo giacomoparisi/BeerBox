@@ -1,9 +1,13 @@
 package com.giacomoparisi.home.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +24,7 @@ import com.giacomoparisi.core.compose.preview.ScreenPreview
 import com.giacomoparisi.core.compose.theme.BeerBoxTheme
 import com.giacomoparisi.home.data.HomeState
 import com.giacomoparisi.home.data.HomeViewModel
+import com.giacomoparisi.home.ui.beer.BeerItem
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel) {
@@ -39,18 +44,34 @@ fun HomeScreen(state: HomeState) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        Text(
-            text =
-            buildAnnotatedString {
-                withStyle(SpanStyle(fontWeight = FontWeight.Normal)) { append("Beer") }
-                append(" ")
-                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) { append("Box") }
-            },
-            style = MaterialTheme.typography.headlineMedium,
-            color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.padding(20.dp)
-        )
+        HeaderLogo()
+        // Beer List
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            contentPadding = PaddingValues(20.dp),
+            modifier = Modifier.fillMaxSize()
+        ) {
+            items(state.beers.dataOrNull()?.data ?: emptyList()) {
+                // Beer Item
+                BeerItem(beer = it)
+            }
+        }
     }
+}
+
+@Composable
+private fun HeaderLogo() {
+    Text(
+        text =
+        buildAnnotatedString {
+            withStyle(SpanStyle(fontWeight = FontWeight.Normal)) { append("Beer") }
+            append(" ")
+            withStyle(SpanStyle(fontWeight = FontWeight.Bold)) { append("Box") }
+        },
+        style = MaterialTheme.typography.headlineMedium,
+        color = MaterialTheme.colorScheme.onBackground,
+        modifier = Modifier.padding(20.dp)
+    )
 }
 
 @ScreenPreview

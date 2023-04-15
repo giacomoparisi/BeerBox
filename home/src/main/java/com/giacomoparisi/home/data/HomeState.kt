@@ -23,3 +23,9 @@ data class HomeState(
     }
 
 }
+
+sealed class HomeAction {
+
+    object GetBeers: HomeAction()
+
+}
