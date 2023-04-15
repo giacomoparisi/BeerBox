@@ -13,4 +13,9 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "BeerBox"
-include ':app'
+include(":app")
+include(":entities")
+include(":domain")
+include(":data")
+include(":core")
+include(":home")
