@@ -26,6 +26,7 @@ data class HomeState(
 
 sealed class HomeAction {
 
-    object GetBeers: HomeAction()
+    object GetBeers : HomeAction()
+    data class SetScrollPosition(val position: Int) : HomeAction()
 
 }

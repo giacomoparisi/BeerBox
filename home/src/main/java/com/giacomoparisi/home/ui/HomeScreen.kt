@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +22,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.giacomoparisi.core.compose.preview.ScreenPreview
 import com.giacomoparisi.core.compose.theme.BeerBoxTheme
+import com.giacomoparisi.home.data.HomeAction
 import com.giacomoparisi.home.data.HomeState
 import com.giacomoparisi.home.data.HomeViewModel
 import com.giacomoparisi.home.ui.beer.BeerItem
@@ -31,12 +32,18 @@ fun HomeScreen(viewModel: HomeViewModel) {
 
     val state by viewModel.stateFlow.collectAsState()
 
-    HomeScreen(state = state)
+    HomeScreen(
+        state = state,
+        onScrollPositionChanged = { viewModel.dispatch(HomeAction.SetScrollPosition(it)) }
+    )
 
 }
 
 @Composable
-fun HomeScreen(state: HomeState) {
+fun HomeScreen(
+    state: HomeState,
+    onScrollPositionChanged: (Int) -> Unit
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier =
@@ -51,9 +58,10 @@ fun HomeScreen(state: HomeState) {
             contentPadding = PaddingValues(20.dp),
             modifier = Modifier.fillMaxSize()
         ) {
-            items(state.beers.dataOrNull()?.data ?: emptyList()) {
+            itemsIndexed(state.beers.dataOrNull()?.data ?: emptyList()) { index, item ->
+                onScrollPositionChanged(index)
                 // Beer Item
-                BeerItem(beer = it)
+                BeerItem(beer = item)
             }
         }
     }
@@ -78,6 +86,6 @@ private fun HeaderLogo() {
 @Composable
 fun HomeScreenPreview() {
     BeerBoxTheme {
-        HomeScreen(state = HomeState.mock())
+        HomeScreen(state = HomeState.mock(), onScrollPositionChanged = {})
     }
 }

@@ -68,17 +68,14 @@ class HomeViewModel @Inject constructor(
             }
         )
 
-    private fun getBeersNextPage(): Action =
+    private fun getBeersNextPage(position: Int): Action =
         action(
             {
                 val currentBeers = state.beers.currentOrPrevious()
-                if (currentBeers != null) {
-                    val nextPage = currentBeers.page + 1
-                    if (needNextPage(page = nextPage)) {
-                        // TODO: loading
-                        val beers = getBeers(page = nextPage)
-                        emit { it.copy(beers = beers.toData()) }
-                    }
+                if (currentBeers != null && needNextPage(scrollPosition = position)) {
+                    // TODO: loading
+                    val beers = getBeers(page = currentBeers.page + 1)
+                    emit { it.copy(beers = beers.toData()) }
                 }
             },
             { throwable ->
@@ -86,14 +83,14 @@ class HomeViewModel @Inject constructor(
             }
         )
 
-    private fun needNextPage(page: Int): Boolean {
+    private fun needNextPage(scrollPosition: Int): Boolean {
 
         val beers = state.beers.dataOrNull()
 
         return beersJob.isTerminated &&
                 beers != null &&
                 beers.isCompleted.not() &&
-                (page + 1) >= beers.size
+                (scrollPosition + 1) >= beers.size
     }
 
     private suspend fun getBeers(page: Int): PagedList<Beer> {
@@ -107,7 +104,10 @@ class HomeViewModel @Inject constructor(
 
     fun dispatch(action: HomeAction) {
         when (action) {
-            HomeAction.GetBeers -> viewModelScope.launchAction(getBeersFirstPage())
+            HomeAction.GetBeers ->
+                viewModelScope.launchAction(getBeersFirstPage())
+            is HomeAction.SetScrollPosition ->
+                viewModelScope.launchAction(getBeersNextPage(action.position))
         }
     }
 
