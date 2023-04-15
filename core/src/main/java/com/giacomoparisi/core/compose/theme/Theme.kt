@@ -1,4 +1,4 @@
-package com.giacomoparisi.beerbox.ui.theme
+package com.giacomoparisi.core.compose.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme

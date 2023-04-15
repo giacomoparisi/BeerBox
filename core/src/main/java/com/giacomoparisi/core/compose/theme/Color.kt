@@ -1,4 +1,4 @@
-package com.giacomoparisi.beerbox.ui.theme
+package com.giacomoparisi.core.compose.theme
 
 import androidx.compose.ui.graphics.Color
 
