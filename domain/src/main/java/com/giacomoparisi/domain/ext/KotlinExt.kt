@@ -1,6 +1,6 @@
 package com.giacomoparisi.domain.ext
 
-import com.giacomoparisi.domain.error.WeatherComposeException
+import com.giacomoparisi.domain.error.BeerBoxException
 import kotlinx.coroutines.delay
 
 fun <T> catchToNull(block: () -> T): T? =
@@ -56,5 +56,5 @@ suspend fun <T> retryExponentialBackoff(
     return block() // last attempt
 }
 
-fun <T> T?.nullToError(error: WeatherComposeException? = null): T =
-    this ?: throw error ?: WeatherComposeException.Unknown()
+fun <T> T?.nullToError(error: BeerBoxException? = null): T =
+    this ?: throw error ?: BeerBoxException.Unknown()
