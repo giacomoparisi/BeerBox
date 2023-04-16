@@ -37,7 +37,7 @@ object AndroidX {
 
         const val foundation = "androidx.compose.foundation:foundation:1.3.1"
 
-        const val material3 = "androidx.compose.material3:material3:1.0.1"
+        const val material3 = "androidx.compose.material3:material3-android:1.1.0-beta02"
 
         const val animation = "androidx.compose.animation:animation:1.3.3"
 

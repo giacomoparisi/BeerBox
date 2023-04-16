@@ -1,5 +1,6 @@
 package com.giacomoparisi.home.ui.list
 
+import BeerItem
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,12 +17,12 @@ import com.giacomoparisi.domain.datatypes.LazyData
 import com.giacomoparisi.domain.datatypes.PagedList
 import com.giacomoparisi.entities.beer.Beer
 import com.giacomoparisi.home.data.HomeState
-import com.giacomoparisi.home.ui.beer.BeerItem
 
 @Composable
 fun BeerList(
     beers: LazyData<PagedList<Beer>>,
-    onScrollPositionChanged: (Int) -> Unit
+    onScrollPositionChanged: (Int) -> Unit,
+    onItemClicked: (Beer) -> Unit
 ) {
 
     val items = beers.currentOrPrevious()
@@ -31,7 +32,7 @@ fun BeerList(
     // Scroll up to the beginning of the list when the paginated list was
     // refreshed by a new search or filters
     LaunchedEffect(key1 = page) {
-        if (page == 1) listState.animateScrollToItem(index = 0)
+        if (page == 1) listState.scrollToItem(index = 0)
     }
 
     LazyColumn(
@@ -43,7 +44,7 @@ fun BeerList(
         itemsIndexed(items?.data ?: emptyList()) { index, item ->
             onScrollPositionChanged(index)
             // Beer Item
-            BeerItem(beer = item)
+            BeerItem(beer = item, onItemClicked = onItemClicked)
         }
     }
 }
@@ -52,6 +53,10 @@ fun BeerList(
 @Composable
 private fun BeerListPreview() {
     BeerBoxTheme {
-        BeerList(beers = HomeState.mock().beers, onScrollPositionChanged = {})
+        BeerList(
+            beers = HomeState.mock().beers,
+            onScrollPositionChanged = {},
+            onItemClicked = {}
+        )
     }
 }

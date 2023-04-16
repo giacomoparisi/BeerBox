@@ -1,7 +1,6 @@
-package com.giacomoparisi.home.ui.beer
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,15 +32,26 @@ import com.giacomoparisi.entities.mock.Mock
 import com.giacomoparisi.home.R
 
 @Composable
-fun BeerItem(beer: Beer) {
-    Column(modifier = Modifier.fillMaxWidth()) {
+fun BeerItem(beer: Beer, onItemClicked: (Beer) -> Unit) {
+    Column(
+        modifier =
+        Modifier
+            .fillMaxWidth()
+            .clickable { onItemClicked(beer) }
+    ) {
         Row(
             modifier =
             Modifier
                 .fillMaxWidth()
                 .height(120.dp)
         ) {
-            BeerImage(beer)
+            BeerImage(
+                beer = beer,
+                modifier =
+                Modifier
+                    .fillMaxHeight()
+                    .width(50.dp)
+            )
             Spacer(modifier = Modifier.width(20.dp))
             BeerInfo(beer)
         }
@@ -54,7 +64,7 @@ fun BeerItem(beer: Beer) {
 }
 
 @Composable
-private fun BeerImage(beer: Beer) {
+fun BeerImage(beer: Beer, modifier: Modifier) {
     SubcomposeAsyncImage(
         model =
         ImageRequest.Builder(LocalContext.current)
@@ -79,10 +89,7 @@ private fun BeerImage(beer: Beer) {
                 )
             }
         },
-        modifier =
-        Modifier
-            .fillMaxHeight()
-            .width(50.dp)
+        modifier = modifier
     )
 }
 
@@ -136,7 +143,8 @@ private fun BeerItemPreview(
                         name = name,
                         shortDescription = shortDescription,
                         description = description
-                    )
+                    ),
+                onItemClicked = {}
             )
         }
     }

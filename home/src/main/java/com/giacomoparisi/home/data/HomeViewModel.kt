@@ -6,8 +6,10 @@ import com.giacomoparisi.core.ext.isTerminated
 import com.giacomoparisi.data.error.ErrorMapper
 import com.giacomoparisi.data.error.toError
 import com.giacomoparisi.domain.datatypes.PagedList
+import com.giacomoparisi.domain.datatypes.UIEvent
 import com.giacomoparisi.domain.datatypes.addPage
 import com.giacomoparisi.domain.datatypes.toData
+import com.giacomoparisi.domain.datatypes.toUIEvent
 import com.giacomoparisi.domain.ext.Action
 import com.giacomoparisi.domain.ext.action
 import com.giacomoparisi.domain.ext.catchToNullSuspend
@@ -17,7 +19,9 @@ import com.giacomoparisi.domain.usecases.beer.GetBeersUseCase
 import com.giacomoparisi.entities.beer.Beer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -44,6 +48,11 @@ class HomeViewModel @Inject constructor(
     private suspend fun emit(update: suspend (HomeState) -> HomeState) {
         mutex.withLock { mutableStateFlow.emit(update(mutableStateFlow.value)) }
     }
+
+    /* --- events --- */
+
+    private val events = MutableSharedFlow<UIEvent<HomeEvent>>()
+    val eventsFlow = events.asSharedFlow()
 
     /* --- init --- */
 
@@ -106,6 +115,14 @@ class HomeViewModel @Inject constructor(
         emit { it.copy(search = value) }
     }
 
+    /* --- detail --- */
+
+    private suspend fun selectBeer(beer: Beer?) {
+        emit { it.copy(selectedBeer = beer) }
+        //if (beer != null)
+            //events.emit(HomeEvent.OpenDetailSheet.toUIEvent())
+    }
+
 
     /* --- actions --- */
 
@@ -122,6 +139,9 @@ class HomeViewModel @Inject constructor(
 
             HomeAction.Search ->
                 viewModelScope.launchAction(getBeersFirstPage())
+
+            is HomeAction.SelectBeer ->
+                viewModelScope.launchSafe { selectBeer(action.beer) }
         }
     }
 
