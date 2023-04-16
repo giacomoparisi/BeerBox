@@ -1,6 +1,10 @@
 package com.giacomoparisi.home.ui.list
 
 import BeerItem
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -40,36 +44,47 @@ fun BeerList(
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(
-            state = listState,
-            verticalArrangement = Arrangement.spacedBy(20.dp),
-            contentPadding = PaddingValues(20.dp),
-            modifier = Modifier.fillMaxSize()
+        AnimatedVisibility(
+            visible = items != null && items.data.isNotEmpty(),
+            enter = fadeIn(tween(durationMillis = 1000)),
+            exit = fadeOut(tween(durationMillis = 1000))
         ) {
-            if (items != null)
-                itemsIndexed(items.data) { index, item ->
-                    onScrollPositionChanged(index)
-                    // Beer Item
-                    BeerItem(beer = item, onItemClicked = onItemClicked)
-                }
+            LazyColumn(
+                state = listState,
+                verticalArrangement = Arrangement.spacedBy(20.dp),
+                contentPadding = PaddingValues(20.dp),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                if (items != null)
+                    itemsIndexed(items.data) { index, item ->
+                        onScrollPositionChanged(index)
+                        // Beer Item
+                        BeerItem(beer = item, onItemClicked = onItemClicked)
+                    }
 
-            when (beers) {
-                is LazyData.Loading -> item { LoadingItem() }
-                is LazyData.Error -> item {
-                    ErrorItem(
-                        error = beers.error,
-                        onRetryClicked = onPageRetry
-                    )
-                }
+                when (beers) {
+                    is LazyData.Loading -> item { LoadingItem() }
+                    is LazyData.Error -> item {
+                        ErrorItem(
+                            error = beers.error,
+                            onRetryClicked = onPageRetry
+                        )
+                    }
 
-                else -> Unit
+                    else -> Unit
+                }
             }
         }
 
         // Show empty list UI
         val loadedItems = beers.dataOrNull()
-        if (loadedItems != null && loadedItems.data.isEmpty())
+        AnimatedVisibility(
+            visible = loadedItems != null && loadedItems.data.isEmpty(),
+            enter = fadeIn(tween(durationMillis = 1000)),
+            exit = fadeOut(tween(durationMillis = 1000))
+        ) {
             BeerEmptyList()
+        }
 
     }
 }
