@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -57,17 +58,17 @@ fun BeerDetail(beer: Beer) {
         modifier =
         Modifier
             .fillMaxWidth()
-            .wrapContentHeight()
             .padding(bottom = 20.dp, start = 20.dp, end = 20.dp)
     ) {
         BeerImage(
             beer = beer,
+            contentScale = ContentScale.Fit,
             modifier =
             Modifier
                 .height(200.dp)
-                .width(50.dp)
+                .width(80.dp)
         )
-        Spacer(modifier = Modifier.width(30.dp))
+        Spacer(modifier = Modifier.width(10.dp))
         BeerInfo(beer)
         Spacer(modifier = Modifier.width(5.dp))
     }

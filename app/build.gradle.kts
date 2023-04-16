@@ -113,4 +113,11 @@ dependencies {
     implementation(AndroidX.Lifecycle.viewModelCompose)
     implementation(AndroidX.Activity.compose)
 
+    /*
+        Splash Screen
+        Official android library for brings the Android 12 splash screen
+        to all devices from API 23
+     */
+    implementation(AndroidX.Core.splashScreen)
+
 }

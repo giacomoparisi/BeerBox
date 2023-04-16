@@ -10,6 +10,8 @@ object AndroidX {
 
         const val ktx = "androidx.core:core-ktx:1.9.0"
 
+        const val splashScreen = "androidx.core:core-splashscreen:1.0.0"
+
     }
 
     object Lifecycle {

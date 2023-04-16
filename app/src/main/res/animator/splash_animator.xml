@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <objectAnimator
+        android:duration="1000"
+        android:propertyName="scaleX"
+        android:valueFrom="0.5f"
+        android:valueTo="0.4f"
+        android:interpolator="@android:interpolator/accelerate_cubic"
+        android:valueType="floatType"
+        android:repeatMode="reverse"
+        android:repeatCount="infinite"/>
+
+    <objectAnimator
+        android:duration="1000"
+        android:propertyName="scaleY"
+        android:valueFrom="0.5f"
+        android:valueTo="0.4f"
+        android:interpolator="@android:interpolator/accelerate_cubic"
+        android:valueType="floatType"
+        android:repeatMode="reverse"
+        android:repeatCount="infinite"/>
+</set>

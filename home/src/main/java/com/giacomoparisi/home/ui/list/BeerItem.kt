@@ -64,7 +64,11 @@ fun BeerItem(beer: Beer, onItemClicked: (Beer) -> Unit) {
 }
 
 @Composable
-fun BeerImage(beer: Beer, modifier: Modifier) {
+fun BeerImage(
+    beer: Beer,
+    modifier: Modifier,
+    contentScale: ContentScale = ContentScale.FillHeight
+) {
     SubcomposeAsyncImage(
         model =
         ImageRequest.Builder(LocalContext.current)
@@ -72,7 +76,7 @@ fun BeerImage(beer: Beer, modifier: Modifier) {
             .crossfade(enable = true)
             .build(),
         contentDescription = null,
-        contentScale = ContentScale.FillHeight,
+        contentScale = contentScale,
         error = {
             Image(
                 painter = painterResource(id = R.drawable.beer_placeholder),
