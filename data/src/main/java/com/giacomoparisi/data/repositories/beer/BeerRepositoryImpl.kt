@@ -26,7 +26,7 @@ class BeerRepositoryImpl @Inject constructor(
             ebcMax = filter?.ebcMax
         )
             .mapNotNull { it.toBeer() }
-            .let { it.toPagedList(page, it.size < pageSize) }
+            .let { it.toPagedList(page = page, isCompleted = it.size < pageSize) }
 
     private fun getNameParameter(name: String): String? =
         if (name.isEmpty() || name.isBlank()) null else name.trim()
