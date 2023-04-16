@@ -17,6 +17,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.giacomoparisi.core.compose.async.LoadingError
 import com.giacomoparisi.core.compose.preview.ScreenPreview
 import com.giacomoparisi.core.compose.theme.BeerBoxTheme
 import com.giacomoparisi.domain.datatypes.unwrapEvent
@@ -63,7 +64,8 @@ fun HomeScreen(viewModel: HomeViewModel) {
         onSearchTextChanged = { viewModel.dispatch(HomeAction.SetSearch(it)) },
         onSearchClicked = { viewModel.dispatch(HomeAction.Search) },
         onBeerClicked = { viewModel.dispatch(HomeAction.SelectBeer(it)) },
-        onDetailClosed = { viewModel.dispatch(HomeAction.SelectBeer(beer = null)) }
+        onDetailClosed = { viewModel.dispatch(HomeAction.SelectBeer(beer = null)) },
+        onBeersFirstPageRetry = { viewModel.dispatch(HomeAction.GetBeers) }
     )
 
 }
@@ -77,9 +79,9 @@ fun HomeScreen(
     onSearchTextChanged: (String) -> Unit,
     onSearchClicked: () -> Unit,
     onBeerClicked: (Beer) -> Unit,
-    onDetailClosed: () -> Unit
+    onDetailClosed: () -> Unit,
+    onBeersFirstPageRetry: () -> Unit
 ) {
-
     Box(
         modifier =
         Modifier
@@ -100,11 +102,16 @@ fun HomeScreen(
                 )
             }
             // Beer List
-            BeerList(
-                beers = state.beers,
-                onScrollPositionChanged = onScrollPositionChanged,
-                onItemClicked = onBeerClicked
-            )
+            LoadingError(
+                data = state.firstPage,
+                onRetryClicked = onBeersFirstPageRetry
+            ) {
+                BeerList(
+                    beers = state.beers,
+                    onScrollPositionChanged = onScrollPositionChanged,
+                    onItemClicked = onBeerClicked
+                )
+            }
         }
 
         if (state.selectedBeer != null)
@@ -129,7 +136,8 @@ fun HomeScreenPreview() {
             onSearchTextChanged = {},
             onSearchClicked = {},
             onBeerClicked = {},
-            onDetailClosed = {}
+            onDetailClosed = {},
+            onBeersFirstPageRetry = {}
         )
     }
 }

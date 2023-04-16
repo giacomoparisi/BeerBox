@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.giacomoparisi.core.ext.isTerminated
 import com.giacomoparisi.data.error.ErrorMapper
 import com.giacomoparisi.data.error.toError
+import com.giacomoparisi.domain.datatypes.LazyData
 import com.giacomoparisi.domain.datatypes.PagedList
 import com.giacomoparisi.domain.datatypes.UIEvent
 import com.giacomoparisi.domain.datatypes.addPage
@@ -19,6 +20,7 @@ import com.giacomoparisi.domain.usecases.beer.GetBeersUseCase
 import com.giacomoparisi.entities.beer.Beer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -69,12 +71,12 @@ class HomeViewModel @Inject constructor(
                 catchToNullSuspend { beersJob?.cancel() }
                 beersJob = null
 
-                // TODO: loading
+                emit { it.copy(firstPage = LazyData.Loading()) }
                 val beers = getBeers(page = 1)
-                emit { it.copy(beers = beers.toData()) }
+                emit { it.copy(beers = beers.toData(), firstPage = LazyData.unit()) }
             },
             { throwable ->
-                emit { it.copy(beers = throwable.toError(errorMapper)) }
+                emit { it.copy(firstPage = throwable.toError(errorMapper)) }
             }
         )
 

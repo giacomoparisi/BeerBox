@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="COMMON_error">Oops an error occurred</string>
+    <string name="COMMON_error_network">We\'re experiencing problems connecting you. Try again.</string>
+    <string name="COMMON_error_retry">RETRY</string>
+    <string name="COMMON_error_title">ERROR</string>
+</resources>

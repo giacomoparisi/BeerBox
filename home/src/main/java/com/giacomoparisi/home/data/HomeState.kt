@@ -8,6 +8,7 @@ import com.giacomoparisi.entities.beer.Beer
 
 data class HomeState(
     val beers: LazyData<PagedList<Beer>> = LazyData.Empty,
+    val firstPage: LazyData<Unit> = LazyData.Empty,
     val search: String = "",
     val selectedBeer: Beer? = null
 ) {
