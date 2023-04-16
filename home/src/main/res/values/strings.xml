@@ -2,4 +2,5 @@
 <resources>
     <string name="HOME_beer_info">MORE INFO</string>
     <string name="HOME_search_hint">Search</string>
+    <string name="HOME_search_empty">No results found</string>
 </resources>

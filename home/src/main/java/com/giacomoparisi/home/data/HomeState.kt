@@ -30,15 +30,10 @@ data class HomeState(
 sealed class HomeAction {
 
     object GetBeers : HomeAction()
+    object GetBeersNextPage: HomeAction()
     data class SetScrollPosition(val position: Int) : HomeAction()
     data class SetSearch(val value: String) : HomeAction()
     object Search : HomeAction()
     data class SelectBeer(var beer: Beer?): HomeAction()
-
-}
-
-sealed class HomeEvent {
-
-    object OpenDetailSheet: HomeEvent()
 
 }

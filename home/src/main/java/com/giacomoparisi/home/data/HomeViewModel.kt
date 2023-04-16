@@ -7,10 +7,8 @@ import com.giacomoparisi.data.error.ErrorMapper
 import com.giacomoparisi.data.error.toError
 import com.giacomoparisi.domain.datatypes.LazyData
 import com.giacomoparisi.domain.datatypes.PagedList
-import com.giacomoparisi.domain.datatypes.UIEvent
 import com.giacomoparisi.domain.datatypes.addPage
 import com.giacomoparisi.domain.datatypes.toData
-import com.giacomoparisi.domain.datatypes.toUIEvent
 import com.giacomoparisi.domain.ext.Action
 import com.giacomoparisi.domain.ext.action
 import com.giacomoparisi.domain.ext.catchToNullSuspend
@@ -21,9 +19,7 @@ import com.giacomoparisi.entities.beer.Beer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -51,11 +47,6 @@ class HomeViewModel @Inject constructor(
         mutex.withLock { mutableStateFlow.emit(update(mutableStateFlow.value)) }
     }
 
-    /* --- events --- */
-
-    private val events = MutableSharedFlow<UIEvent<HomeEvent>>()
-    val eventsFlow = events.asSharedFlow()
-
     /* --- init --- */
 
     init {
@@ -80,12 +71,12 @@ class HomeViewModel @Inject constructor(
             }
         )
 
-    private fun getBeersNextPage(position: Int): Action =
+    private fun getBeersNextPage(): Action =
         action(
             {
                 val currentBeers = state.beers.currentOrPrevious()
-                if (currentBeers != null && needNextPage(scrollPosition = position)) {
-                    // TODO: loading
+                if (currentBeers != null) {
+                    emit { it.copy(beers = it.beers.toLoading()) }
                     val beers = getBeers(page = currentBeers.page + 1)
                     emit { it.copy(beers = beers.toData()) }
                 }
@@ -121,8 +112,12 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun selectBeer(beer: Beer?) {
         emit { it.copy(selectedBeer = beer) }
-        //if (beer != null)
-            //events.emit(HomeEvent.OpenDetailSheet.toUIEvent())
+    }
+
+    /* --- pagination --- */
+
+    private fun setScrollPosition(position: Int) {
+        if (needNextPage(scrollPosition = position)) dispatch(HomeAction.GetBeersNextPage)
     }
 
 
@@ -133,8 +128,11 @@ class HomeViewModel @Inject constructor(
             HomeAction.GetBeers ->
                 viewModelScope.launchAction(getBeersFirstPage())
 
+            HomeAction.GetBeersNextPage ->
+                viewModelScope.launchAction(getBeersNextPage())
+
             is HomeAction.SetScrollPosition ->
-                viewModelScope.launchAction(getBeersNextPage(action.position))
+                viewModelScope.launchSafe { setScrollPosition(action.position) }
 
             is HomeAction.SetSearch ->
                 viewModelScope.launchSafe { search(action.value) }
