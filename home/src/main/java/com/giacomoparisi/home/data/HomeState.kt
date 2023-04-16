@@ -30,7 +30,8 @@ data class HomeState(
                 beers =
                 listOf(Beer.mock(), Beer.mock(), Beer.mock())
                     .toPagedList()
-                    .toData()
+                    .toData(),
+                firstPage = LazyData.unit()
             )
 
     }
@@ -45,7 +46,7 @@ sealed class HomeAction {
     data class SetSearch(val value: String) : HomeAction()
     object Search : HomeAction()
     data class SelectBeer(var beer: Beer?) : HomeAction()
-    data class ToggleFilter(val filter: BeerFilter): HomeAction()
-    object ClearFilters: HomeAction()
+    data class ToggleFilter(val filter: BeerFilter) : HomeAction()
+    object ClearFilters : HomeAction()
 
 }

@@ -22,6 +22,7 @@ import com.giacomoparisi.core.compose.async.LoadingItem
 import com.giacomoparisi.core.compose.theme.BeerBoxTheme
 import com.giacomoparisi.domain.datatypes.LazyData
 import com.giacomoparisi.domain.datatypes.PagedList
+import com.giacomoparisi.domain.error.BeerBoxException
 import com.giacomoparisi.entities.beer.Beer
 import com.giacomoparisi.home.data.HomeState
 
@@ -90,16 +91,39 @@ fun BeerList(
     }
 }
 
-@Preview
 @Composable
-private fun BeerListPreview() {
+private fun BeerListPreview(beers: LazyData<PagedList<Beer>>) {
     BeerBoxTheme {
         BeerList(
-            beers = HomeState.mock().beers,
+            beers = beers,
             onScrollPositionChanged = {},
             onItemClicked = {},
             onPageRetry = {},
             onClearFiltersClicked = {}
         )
     }
+}
+
+@Preview
+@Composable
+private fun BeerListPreview() {
+    BeerListPreview(beers = HomeState.mock().beers)
+}
+
+@Preview
+@Composable
+private fun BeerListLoadingPreview() {
+    BeerListPreview(beers = HomeState.mock().beers.toLoading())
+}
+
+@Preview
+@Composable
+private fun BeerListErrorPreview() {
+    BeerListPreview(
+        beers =
+        LazyData.Error(
+            BeerBoxException.Unknown(),
+            HomeState.mock().beers.currentOrPrevious()
+        )
+    )
 }
