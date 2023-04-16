@@ -2,6 +2,7 @@ package com.giacomoparisi.domain.usecases.beer
 
 import com.giacomoparisi.domain.datatypes.PagedList
 import com.giacomoparisi.entities.beer.Beer
+import com.giacomoparisi.entities.beer.BeerFilter
 import javax.inject.Inject
 
 class GetBeersUseCase @Inject constructor(
@@ -11,8 +12,9 @@ class GetBeersUseCase @Inject constructor(
     suspend operator fun invoke(
         page: Int,
         pageSize: Int,
-        name: String
+        name: String,
+        filter: BeerFilter?
     ): PagedList<Beer> =
-        repository.getBeers(page, pageSize, name)
+        repository.getBeers(page, pageSize, name, filter)
 
 }

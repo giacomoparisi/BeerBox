@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SheetState
@@ -22,12 +24,14 @@ import com.giacomoparisi.core.compose.async.LoadingError
 import com.giacomoparisi.core.compose.preview.ScreenPreview
 import com.giacomoparisi.core.compose.theme.BeerBoxTheme
 import com.giacomoparisi.entities.beer.Beer
+import com.giacomoparisi.entities.beer.BeerFilter
 import com.giacomoparisi.home.data.HomeAction
 import com.giacomoparisi.home.data.HomeState
 import com.giacomoparisi.home.data.HomeViewModel
 import com.giacomoparisi.home.ui.detail.BeerDetail
 import com.giacomoparisi.home.ui.header.HeaderLogo
 import com.giacomoparisi.home.ui.list.BeerList
+import com.giacomoparisi.home.ui.list.FiltersList
 import com.giacomoparisi.home.ui.promo.PromoBanner
 import com.giacomoparisi.home.ui.search.SearchBar
 
@@ -48,7 +52,8 @@ fun HomeScreen(viewModel: HomeViewModel) {
         onBeerClicked = { viewModel.dispatch(HomeAction.SelectBeer(it)) },
         onDetailClosed = { viewModel.dispatch(HomeAction.SelectBeer(beer = null)) },
         onBeersFirstPageRetry = { viewModel.dispatch(HomeAction.GetBeers) },
-        onBeersPageRetry = { viewModel.dispatch(HomeAction.GetBeersNextPage) }
+        onBeersPageRetry = { viewModel.dispatch(HomeAction.GetBeersNextPage) },
+        onFilterSelected = { viewModel.dispatch(HomeAction.ToggleFilter(it)) }
     )
 
 }
@@ -64,7 +69,8 @@ fun HomeScreen(
     onBeerClicked: (Beer) -> Unit,
     onDetailClosed: () -> Unit,
     onBeersFirstPageRetry: () -> Unit,
-    onBeersPageRetry: () -> Unit
+    onBeersPageRetry: () -> Unit,
+    onFilterSelected: (BeerFilter) -> Unit
 ) {
     Box(
         modifier =
@@ -87,7 +93,17 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.height(20.dp))
                 // Promo
                 PromoBanner()
+                Spacer(modifier = Modifier.height(20.dp))
+                FiltersList(
+                    selectedFilter = state.selectedFilter,
+                    onFilterSelected = onFilterSelected
+                )
+                Spacer(modifier = Modifier.height(10.dp))
             }
+            Divider(
+                color = MaterialTheme.colorScheme.onSecondary.copy(alpha = 0.2f),
+                modifier = Modifier.fillMaxWidth()
+            )
             // Beer List
             LoadingError(
                 data = state.firstPage,
@@ -126,7 +142,8 @@ fun HomeScreenPreview() {
             onBeerClicked = {},
             onDetailClosed = {},
             onBeersFirstPageRetry = {},
-            onBeersPageRetry = {}
+            onBeersPageRetry = {},
+            onFilterSelected = {}
         )
     }
 }

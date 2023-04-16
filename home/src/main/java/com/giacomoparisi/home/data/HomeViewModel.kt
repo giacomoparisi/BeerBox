@@ -16,9 +16,9 @@ import com.giacomoparisi.domain.ext.launchAction
 import com.giacomoparisi.domain.ext.launchSafe
 import com.giacomoparisi.domain.usecases.beer.GetBeersUseCase
 import com.giacomoparisi.entities.beer.Beer
+import com.giacomoparisi.entities.beer.BeerFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.sync.Mutex
@@ -97,7 +97,13 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun getBeers(page: Int): PagedList<Beer> {
-        val beers = getBeersUseCase(page, pageSize, name = state.search)
+        val beers =
+            getBeersUseCase(
+                page,
+                pageSize,
+                name = state.search,
+                filter = state.selectedFilter
+            )
         return if (beers.page == 1) beers
         else state.beers.currentOrPrevious()?.addPage(beers) ?: PagedList.empty()
     }
@@ -106,6 +112,11 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun search(value: String) {
         emit { it.copy(search = value) }
+    }
+
+    private suspend fun toggleFilter(filter: BeerFilter) {
+        emit { it.copy(selectedFilter = if (it.selectedFilter == filter) null else filter) }
+        dispatch(HomeAction.GetBeers)
     }
 
     /* --- detail --- */
@@ -142,6 +153,9 @@ class HomeViewModel @Inject constructor(
 
             is HomeAction.SelectBeer ->
                 viewModelScope.launchSafe { selectBeer(action.beer) }
+
+            is HomeAction.ToggleFilter ->
+                viewModelScope.launchSafe { toggleFilter(action.filter) }
         }
     }
 

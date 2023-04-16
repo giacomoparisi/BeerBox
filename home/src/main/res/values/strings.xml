@@ -5,4 +5,9 @@
     <string name="HOME_search_empty">No results found</string>
     <string name="HOME_promo_title">Weekend Offers</string>
     <string name="HOME_promo_description">Free shipping on orders over 60€</string>
+
+    <string name="HOME_filter_golden">Golden</string>
+    <string name="HOME_filter_amber">Amber</string>
+    <string name="HOME_filter_brown">Brown</string>
+    <string name="HOME_filter_black">Black</string>
 </resources>

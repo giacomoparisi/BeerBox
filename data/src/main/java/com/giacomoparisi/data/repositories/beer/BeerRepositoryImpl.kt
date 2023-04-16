@@ -5,14 +5,26 @@ import com.giacomoparisi.domain.datatypes.PagedList
 import com.giacomoparisi.domain.datatypes.toPagedList
 import com.giacomoparisi.domain.usecases.beer.BeerRepository
 import com.giacomoparisi.entities.beer.Beer
+import com.giacomoparisi.entities.beer.BeerFilter
 import javax.inject.Inject
 
 class BeerRepositoryImpl @Inject constructor(
     private val api: BeerApi
 ) : BeerRepository {
 
-    override suspend fun getBeers(page: Int, pageSize: Int, name: String): PagedList<Beer> =
-        api.getBeers(page, pageSize, getNameParameter(name))
+    override suspend fun getBeers(
+        page: Int,
+        pageSize: Int,
+        name: String,
+        filter: BeerFilter?
+    ): PagedList<Beer> =
+        api.getBeers(
+            page = page,
+            pageSize = pageSize,
+            name = getNameParameter(name),
+            ebcMin = filter?.ebcMin,
+            ebcMax = filter?.ebcMax
+        )
             .mapNotNull { it.toBeer() }
             .let { it.toPagedList(page, it.size < pageSize) }
 
