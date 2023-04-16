@@ -12,6 +12,7 @@ import com.giacomoparisi.domain.ext.Action
 import com.giacomoparisi.domain.ext.action
 import com.giacomoparisi.domain.ext.catchToNullSuspend
 import com.giacomoparisi.domain.ext.launchAction
+import com.giacomoparisi.domain.ext.launchSafe
 import com.giacomoparisi.domain.usecases.beer.GetBeersUseCase
 import com.giacomoparisi.entities.beer.Beer
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -94,9 +95,15 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun getBeers(page: Int): PagedList<Beer> {
-        val beers = getBeersUseCase(page, pageSize)
+        val beers = getBeersUseCase(page, pageSize, name = state.search)
         return if (beers.page == 1) beers
         else state.beers.currentOrPrevious()?.addPage(beers) ?: PagedList.empty()
+    }
+
+    /* --- search --- */
+
+    private suspend fun search(value: String) {
+        emit { it.copy(search = value) }
     }
 
 
@@ -106,8 +113,15 @@ class HomeViewModel @Inject constructor(
         when (action) {
             HomeAction.GetBeers ->
                 viewModelScope.launchAction(getBeersFirstPage())
+
             is HomeAction.SetScrollPosition ->
                 viewModelScope.launchAction(getBeersNextPage(action.position))
+
+            is HomeAction.SetSearch ->
+                viewModelScope.launchSafe { search(action.value) }
+
+            HomeAction.Search ->
+                viewModelScope.launchAction(getBeersFirstPage())
         }
     }
 

@@ -9,7 +9,8 @@ interface BeerApi {
     @GET("v2/beers")
     suspend fun getBeers(
         @Query("page") page: Int,
-        @Query("per_page") pageSize: Int
+        @Query("per_page") pageSize: Int,
+        @Query("beer_name") name: String?
     ): List<BeerResponse>
 
 }

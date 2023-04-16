@@ -5,6 +5,6 @@ import com.giacomoparisi.entities.beer.Beer
 
 interface BeerRepository {
 
-    suspend fun getBeers(page: Int, pageSize: Int): PagedList<Beer>
+    suspend fun getBeers(page: Int, pageSize: Int, name: String): PagedList<Beer>
 
 }
