@@ -39,6 +39,7 @@ class HomeViewModel @Inject constructor(
 
     /* --- state --- */
 
+    // Handle screen state with StateFlow for Jetpack Compose UI
     private val mutableStateFlow = MutableStateFlow(HomeState())
     val stateFlow = mutableStateFlow.asStateFlow()
     private val state get() = mutableStateFlow.value
@@ -139,6 +140,7 @@ class HomeViewModel @Inject constructor(
 
     /* --- actions --- */
 
+    // All action available for Home screen
     fun dispatch(action: HomeAction) {
         when (action) {
             HomeAction.GetBeers ->

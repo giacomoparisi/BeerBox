@@ -7,6 +7,7 @@ import com.giacomoparisi.domain.datatypes.toPagedList
 import com.giacomoparisi.entities.beer.Beer
 import com.giacomoparisi.entities.beer.BeerFilter
 
+// Use of LazyData datatype for handling error and loading state for async data
 data class HomeState(
     val beers: LazyData<PagedList<Beer>> = LazyData.Empty,
     val firstPage: LazyData<Unit> = LazyData.Empty,
