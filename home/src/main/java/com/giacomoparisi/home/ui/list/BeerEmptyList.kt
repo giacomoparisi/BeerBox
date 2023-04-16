@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +25,9 @@ import com.giacomoparisi.core.compose.theme.BeerBoxTheme
 import com.giacomoparisi.home.R
 
 @Composable
-fun BeerEmptyList() {
+fun BeerEmptyList(
+    onClearFiltersClicked: () -> Unit
+) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -45,6 +49,17 @@ fun BeerEmptyList() {
             color = MaterialTheme.colorScheme.onBackground,
             textAlign = TextAlign.Center
         )
+        Spacer(modifier = Modifier.height(20.dp))
+        Button(
+            onClick = onClearFiltersClicked,
+            modifier = Modifier.width(200.dp)
+        ) {
+            Text(
+                text = stringResource(id = R.string.HOME_filters_clear),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+        }
     }
 }
 
@@ -52,6 +67,6 @@ fun BeerEmptyList() {
 @Composable
 private fun BeerEmptyListPreview() {
     BeerBoxTheme {
-        BeerEmptyList()
+        BeerEmptyList(onClearFiltersClicked = {})
     }
 }

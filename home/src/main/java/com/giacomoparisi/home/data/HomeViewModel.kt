@@ -119,6 +119,11 @@ class HomeViewModel @Inject constructor(
         dispatch(HomeAction.GetBeers)
     }
 
+    private suspend fun clearFilters() {
+        emit { it.copy(selectedFilter = null, search = "") }
+        dispatch(HomeAction.GetBeers)
+    }
+
     /* --- detail --- */
 
     private suspend fun selectBeer(beer: Beer?) {
@@ -156,6 +161,9 @@ class HomeViewModel @Inject constructor(
 
             is HomeAction.ToggleFilter ->
                 viewModelScope.launchSafe { toggleFilter(action.filter) }
+
+            HomeAction.ClearFilters ->
+                viewModelScope.launchSafe { clearFilters() }
         }
     }
 

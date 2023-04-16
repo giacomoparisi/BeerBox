@@ -46,5 +46,6 @@ sealed class HomeAction {
     object Search : HomeAction()
     data class SelectBeer(var beer: Beer?) : HomeAction()
     data class ToggleFilter(val filter: BeerFilter): HomeAction()
+    object ClearFilters: HomeAction()
 
 }

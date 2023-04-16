@@ -53,7 +53,8 @@ fun HomeScreen(viewModel: HomeViewModel) {
         onDetailClosed = { viewModel.dispatch(HomeAction.SelectBeer(beer = null)) },
         onBeersFirstPageRetry = { viewModel.dispatch(HomeAction.GetBeers) },
         onBeersPageRetry = { viewModel.dispatch(HomeAction.GetBeersNextPage) },
-        onFilterSelected = { viewModel.dispatch(HomeAction.ToggleFilter(it)) }
+        onFilterSelected = { viewModel.dispatch(HomeAction.ToggleFilter(it)) },
+        onClearFiltersClicked = { viewModel.dispatch(HomeAction.ClearFilters) }
     )
 
 }
@@ -70,7 +71,8 @@ fun HomeScreen(
     onDetailClosed: () -> Unit,
     onBeersFirstPageRetry: () -> Unit,
     onBeersPageRetry: () -> Unit,
-    onFilterSelected: (BeerFilter) -> Unit
+    onFilterSelected: (BeerFilter) -> Unit,
+    onClearFiltersClicked: () -> Unit
 ) {
     Box(
         modifier =
@@ -113,7 +115,8 @@ fun HomeScreen(
                     beers = state.beers,
                     onScrollPositionChanged = onScrollPositionChanged,
                     onItemClicked = onBeerClicked,
-                    onPageRetry = onBeersPageRetry
+                    onPageRetry = onBeersPageRetry,
+                    onClearFiltersClicked = onClearFiltersClicked
                 )
             }
         }
@@ -143,7 +146,8 @@ fun HomeScreenPreview() {
             onDetailClosed = {},
             onBeersFirstPageRetry = {},
             onBeersPageRetry = {},
-            onFilterSelected = {}
+            onFilterSelected = {},
+            onClearFiltersClicked = {}
         )
     }
 }

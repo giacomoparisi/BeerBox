@@ -10,4 +10,5 @@
     <string name="HOME_filter_amber">Amber</string>
     <string name="HOME_filter_brown">Brown</string>
     <string name="HOME_filter_black">Black</string>
+    <string name="HOME_filters_clear">CLEAR FILTERS</string>
 </resources>

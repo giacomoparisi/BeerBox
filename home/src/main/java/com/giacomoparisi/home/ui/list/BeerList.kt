@@ -30,7 +30,8 @@ fun BeerList(
     beers: LazyData<PagedList<Beer>>,
     onScrollPositionChanged: (Int) -> Unit,
     onItemClicked: (Beer) -> Unit,
-    onPageRetry: () -> Unit
+    onPageRetry: () -> Unit,
+    onClearFiltersClicked: () -> Unit
 ) {
 
     val items = beers.currentOrPrevious()
@@ -83,7 +84,7 @@ fun BeerList(
             enter = fadeIn(tween(durationMillis = 1000)),
             exit = fadeOut(tween(durationMillis = 1000))
         ) {
-            BeerEmptyList()
+            BeerEmptyList(onClearFiltersClicked = onClearFiltersClicked)
         }
 
     }
@@ -97,7 +98,8 @@ private fun BeerListPreview() {
             beers = HomeState.mock().beers,
             onScrollPositionChanged = {},
             onItemClicked = {},
-            onPageRetry = {}
+            onPageRetry = {},
+            onClearFiltersClicked = {}
         )
     }
 }
