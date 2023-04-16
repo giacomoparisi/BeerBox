@@ -3,7 +3,9 @@ package com.giacomoparisi.home.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -26,6 +28,7 @@ import com.giacomoparisi.home.data.HomeViewModel
 import com.giacomoparisi.home.ui.detail.BeerDetail
 import com.giacomoparisi.home.ui.header.HeaderLogo
 import com.giacomoparisi.home.ui.list.BeerList
+import com.giacomoparisi.home.ui.promo.PromoBanner
 import com.giacomoparisi.home.ui.search.SearchBar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -74,13 +77,16 @@ fun HomeScreen(
             modifier = Modifier.fillMaxSize()
         ) {
             HeaderLogo()
-            // SearchBar
-            Box(modifier = Modifier.padding(20.dp)) {
+            Column(modifier = Modifier.padding(horizontal = 20.dp)) {
+                // SearchBar
                 SearchBar(
                     value = state.search,
                     onValueChange = onSearchTextChanged,
                     onSearchClicked = onSearchClicked
                 )
+                Spacer(modifier = Modifier.height(20.dp))
+                // Promo
+                PromoBanner()
             }
             // Beer List
             LoadingError(

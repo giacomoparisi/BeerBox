@@ -3,4 +3,6 @@
     <string name="HOME_beer_info">MORE INFO</string>
     <string name="HOME_search_hint">Search</string>
     <string name="HOME_search_empty">No results found</string>
+    <string name="HOME_promo_title">Weekend Offers</string>
+    <string name="HOME_promo_description">Free shipping on orders over 60€</string>
 </resources>
