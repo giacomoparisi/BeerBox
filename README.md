@@ -1,12 +1,21 @@
-# BeerBox 
+# BeerBox
 
-BeerBox is a beer catalog sample Android application, where you can search and view all of Brewdog's beers.
+BeerBox is a beer catalog sample Android application, where you can search and view all of Brewdog's
+beers.
 
 ### ⬇️ Try out the app, download the apk from the link below:
 
-[![BeerBox](https://img.shields.io/badge/BeerBox-v1.0.0-%2306090E?style=for-the-badge&logo=android)]()
+[![BeerBox](https://img.shields.io/badge/BeerBox-v1.0.0-%6006090E?style=for-the-badge&logo=android)]()
 
-## Architecture :
+# Table of Contents
+
+1. [Architecture](#architecture)
+2. [Libraries](#libraries)
+3. [Features](#features)
+4. [Credits](#credits)
+
+## ARCHITECTURE : <a name="architecture"></a>
+
 This project is based on the CleanArchitecture
 
  ```
@@ -34,6 +43,68 @@ com.giacomoparisi.beerbox
 
 ```
 
+## LIBRARIES <a name="libraries"></a>
+
+- **Jetpack Compose**
+  ```
+  Official new Android’s recommended modern toolkit for building native UI.
+  Benefits:
+   - Simplifies and accelerates UI development on Android
+   - Less code
+   - Powerful preview and debug tools
+   - No more xml files, only Kotlin for the entire project
+   - Better and easier UI testing
+  ```
+
+- **View Model**
+  ```
+  Official Android library for ViewModel, a class for business logic or
+  screen level state holder
+  
+  Benefits:
+      - Better integration with the android framework
+      - Caches state and persists it through configuration changes
+        (no need to fetch data again when navigating between screens)
+  ```
+- **Kotlin Coroutines**
+  ```
+  Official Kotlin Coroutines libraries
+  ```
+- **Retrofit**
+  ```
+  HTTP client for Android
+  Benefits:
+     - Easier networking implementation for Android apps
+     - Very fast
+     - Reduce error-prone boilerplate code
+     - Support for Kotlin Coroutines
+     - Use OkHttp for low level network operations
+  ```
+
+- **Moshi**
+  ```
+  Moshi Json library for response deserialization
+  ```
+
+- **Dagger Hilt**
+  ```
+  Dependency injection library
+  
+  Benefits:
+      - Reduce error-prone boilerplate code
+      - Builds and validates dependency graphs, ensuring that every object's dependencies
+        can be satisfied and no dependency cycles exist
+      - Better dependencies management (dependencies scope, modules, singleton ecc.)
+      - Easier unit and integration testing
+  ```
+- **Splash Screen**
+  ```
+        Official android library for brings the Android 12 splash screen
+        to all devices from API 23
+  ```
+
+## FEATURES <a name="features"></a>
+
 ### SCREENS
 
 <table class="tg">
@@ -51,13 +122,13 @@ com.giacomoparisi.beerbox
 </tbody>
 </table>
 
-### FEATURES
+### SEARCH
 
 <table class="tg">
 <thead>
   <tr>
-    <th class="tg-0pky">SEARCH</th>
-    <th class="tg-0pky">FILTERS</th>
+    <th class="tg-0pky">TEXT SEARCH</th>
+    <th class="tg-0pky">FILTERS SEARCH</th>
   </tr>
 </thead>
 <tbody>
@@ -65,17 +136,19 @@ com.giacomoparisi.beerbox
     <th class="tg-0pky"><img src="images/search.png" width=30%></th>
     <th class="tg-0pky"><img src="images/filters.png" width=30%></th>
   </tr>
+</tbody>
  <thead>
   <tr>
     <th class="tg-0pky">EMPTY SEARCH</th>
     <th class="tg-0pky"></th>
   </tr>
 </thead>
+<thead>
  <tr>
     <th class="tg-0pky"><img src="images/no_results.png" width=30%></th>
     <th class="tg-0pky"></th>
  </tr>
-</tbody>
+</thead>
 </table>
 
 ### LOADING
@@ -112,33 +185,12 @@ com.giacomoparisi.beerbox
 </tbody>
 </table>
 
+## Credits <a name="credits"></a>
 
-### FEATURES
-
-#### SPLASH SCREEN
-
-<img src="images/splash_screen.png" width=20% height=20%>
-
-#### HOME
-<img src="images/home.png" width=20% height=20%>
-
-#### SEARCH
-<img src="images/search.png" width=20% height=20%> 
-
-#### FILTERS
-<img src="images/filters.png" width=20% height=20%>
-
-#### LOADING
-<img src="images/loading.png" width=20% height=20%>
-
-#### LOADING ITEM
-<img src="images/list_loading.png" width=20% height=20%>
-
-
-### Credits 
 The API used by this project are provided by **[Punk Api](https://punkapi.com/)**
 
 ## License
+
 ```
  Copyright 2023 Giacomo Parisi
 
