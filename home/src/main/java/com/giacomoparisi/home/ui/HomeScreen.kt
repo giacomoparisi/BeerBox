@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -121,12 +122,18 @@ fun HomeScreen(
             }
         }
 
-        if (state.selectedBeer != null)
+        if (state.selectedBeer != null) {
             BeerDetail(
                 beer = state.selectedBeer,
                 sheetState = sheetState,
                 onDismiss = onDetailClosed
             )
+
+        }
+
+        LaunchedEffect(key1 = state.selectedBeer) {
+            if(state.selectedBeer != null) sheetState.show()
+        }
     }
 }
 
