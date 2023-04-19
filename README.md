@@ -7,7 +7,7 @@ beers.
 
 ### ⬇️ Try out the app, download the apk from the link below:
 
-[![BeerBox](https://img.shields.io/badge/BeerBox-v1.0.0-%6006090E?style=for-the-badge&logo=android)]()
+[![BeerBox](https://img.shields.io/badge/BeerBox-v1.0.0-%6006090E?style=for-the-badge&logo=android)](https://github.com/giacomoparisi/BeerBox/blob/main/releases/BeerBox-v1.0.0.apk)
 
 # Table of Contents
 
