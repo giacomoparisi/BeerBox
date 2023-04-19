@@ -97,4 +97,26 @@ dependencies {
      */
     implementation(Coil.compose)
 
+    /*
+        MockK
+        Mocking library for Kotlin
+     */
+    testImplementation(Mockk.mockk)
+    /*
+        JUnit
+        JVM testing framework
+     */
+    testImplementation(JUnit.junit)
+    /*
+        Kotest Assertions
+        Kotlin assertions library
+     */
+    testImplementation(Kotest.assertionCore)
+
+    /*
+        Coroutine Test
+        Official Kotlin Coroutines test library
+     */
+    testImplementation(KotlinX.Coroutines.test)
+
 }

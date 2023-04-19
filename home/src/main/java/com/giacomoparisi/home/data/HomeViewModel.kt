@@ -42,7 +42,7 @@ class HomeViewModel @Inject constructor(
     // Handle screen state with StateFlow for Jetpack Compose UI
     private val mutableStateFlow = MutableStateFlow(HomeState())
     val stateFlow = mutableStateFlow.asStateFlow()
-    private val state get() = mutableStateFlow.value
+    val state get() = mutableStateFlow.value
 
     private suspend fun emit(update: suspend (HomeState) -> HomeState) {
         mutex.withLock { mutableStateFlow.emit(update(mutableStateFlow.value)) }
@@ -144,10 +144,10 @@ class HomeViewModel @Inject constructor(
     fun dispatch(action: HomeAction) {
         when (action) {
             HomeAction.GetBeers ->
-                viewModelScope.launchAction(getBeersFirstPage())
+                beersJob = viewModelScope.launchAction(getBeersFirstPage())
 
             HomeAction.GetBeersNextPage ->
-                viewModelScope.launchAction(getBeersNextPage())
+                beersJob = viewModelScope.launchAction(getBeersNextPage())
 
             is HomeAction.SetScrollPosition ->
                 viewModelScope.launchSafe { setScrollPosition(action.position) }

@@ -9,6 +9,8 @@ object KotlinX {
 
         const val android = "$group:kotlinx-coroutines-android:$version"
 
+        const val test = "$group:kotlinx-coroutines-test:$version"
+
     }
 
 }
