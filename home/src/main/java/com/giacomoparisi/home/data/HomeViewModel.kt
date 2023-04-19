@@ -144,7 +144,7 @@ class HomeViewModel @Inject constructor(
     fun dispatch(action: HomeAction) {
         when (action) {
             HomeAction.GetBeers ->
-                beersJob = viewModelScope.launchAction(getBeersFirstPage())
+                viewModelScope.launchAction(getBeersFirstPage())
 
             HomeAction.GetBeersNextPage ->
                 beersJob = viewModelScope.launchAction(getBeersNextPage())
