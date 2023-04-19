@@ -78,5 +78,21 @@ dependencies {
     implementation(Squareup.Retrofit2.Converter.moshi)
     implementation(Squareup.Moshi.kotlin)
 
+    /*
+        MockK
+        Mocking library for Kotlin
+     */
+    testImplementation(Mockk.mockk)
+    /*
+        JUnit
+        JVM testing framework
+     */
+    testImplementation(JUnit.junit)
+    /*
+        Kotest Assertions
+        Kotlin assertions library
+     */
+    testImplementation(Kotest.assertionCore)
+
 
 }

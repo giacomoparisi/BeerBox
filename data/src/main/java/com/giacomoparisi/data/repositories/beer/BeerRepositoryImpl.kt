@@ -28,7 +28,7 @@ class BeerRepositoryImpl @Inject constructor(
             .mapNotNull { it.toBeer() }
             .let { it.toPagedList(page = page, isCompleted = it.size < pageSize) }
 
-    private fun getNameParameter(name: String): String? =
+    fun getNameParameter(name: String): String? =
         if (name.isEmpty() || name.isBlank()) null else name.trim()
 
 }
