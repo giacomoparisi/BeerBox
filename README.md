@@ -3,7 +3,7 @@
 BeerBox is a beer catalog sample Android application, where you can search and view all of Brewdog's
 beers.
 
-Builded with: Android Studio Flamingo | 2022.2.1***
+***Builded with: Android Studio Flamingo | 2022.2.1***
 
 ### ⬇️ Try out the app, download the apk from the link below:
 
