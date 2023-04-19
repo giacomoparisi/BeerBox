@@ -3,6 +3,8 @@
 BeerBox is a beer catalog sample Android application, where you can search and view all of Brewdog's
 beers.
 
+Builded with: Android Studio Flamingo | 2022.2.1***
+
 ### ⬇️ Try out the app, download the apk from the link below:
 
 [![BeerBox](https://img.shields.io/badge/BeerBox-v1.0.0-%6006090E?style=for-the-badge&logo=android)]()
@@ -48,6 +50,7 @@ com.giacomoparisi.beerbox
 - **Jetpack Compose**
   ```
   Official new Android’s recommended modern toolkit for building native UI.
+  
   Benefits:
    - Simplifies and accelerates UI development on Android
    - Less code
@@ -73,6 +76,7 @@ com.giacomoparisi.beerbox
 - **Retrofit**
   ```
   HTTP client for Android
+  
   Benefits:
      - Easier networking implementation for Android apps
      - Very fast
@@ -102,6 +106,22 @@ com.giacomoparisi.beerbox
         Official android library for brings the Android 12 splash screen
         to all devices from API 23
   ```
+- JUnit
+  ```
+  JVM testing framework
+  ```
+- MockK
+  ```
+  Mocking library for Kotlin
+  ```
+- Kotest Assertions
+  ```
+  Kotlin assertions library
+  ```
+- Coroutine Test
+  ```
+  Official Kotlin Coroutines test library
+  ```
 
 ## FEATURES <a name="features"></a>
 
@@ -118,6 +138,18 @@ com.giacomoparisi.beerbox
   <tr>
     <th class="tg-0pky"><img src="images/splash_screen.png" width=30%></th>
     <th class="tg-0pky"><img src="images/home.png" width=30%></th>
+  </tr>
+</tbody>
+<thead>
+  <tr>
+    <th class="tg-0pky">DETAIL</th>
+    <th class="tg-0pky"></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <th class="tg-0pky"><img src="images/detail.png" width=30%></th>
+    <th class="tg-0pky"></th>
   </tr>
 </tbody>
 </table>
